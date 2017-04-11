@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean name="hibernateConfiguration" class="org.hibernate.cfg.Configuration" init-method="configure"/>
+    <bean name="sessionFactory" factory-bean="hibernateConfiguration" factory-method="buildSessionFactory"/>
+
+    <bean name="userDao" class="com.bonial.mushopl.dao.UserDaoImpl">
+        <constructor-arg name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean name="productDao" class="com.bonial.mushopl.dao.ProductDaoImpl">
+        <constructor-arg name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean name="userSessionDao" class="com.bonial.mushopl.dao.UserSessionDaoImpl">
+        <constructor-arg name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="passwordManager" class="com.bonial.mushopl.util.password.SecurePasswordManagerImpl"/>
+    <bean name="sessionManager" class="com.bonial.mushopl.util.session.SessionManagerImpl">
+        <constructor-arg name="userDao" ref="userDao"/>
+        <constructor-arg name="userSessionDao" ref="userSessionDao"/>
+    </bean>
+    <bean name="xmlManager" class="com.bonial.mushopl.util.xml.XmlManager"/>
+
+    <bean class="com.bonial.mushopl.TestDataPopulator" init-method="populate">
+        <constructor-arg name="userDao" ref="userDao"/>
+        <constructor-arg name="productDao" ref="productDao"/>
+        <constructor-arg name="passwordManager" ref="passwordManager"/>
+    </bean>
+
+</beans>

@@ -1,0 +1,46 @@
+group 'com.bonial.mushopl'
+version '1.0-SNAPSHOT'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'org.akhikhl.gretty:gretty:1.4.2'
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'org.akhikhl.gretty'
+
+sourceCompatibility = 1.8
+
+gretty {
+    httpPort = 8080
+    contextPath = '/mushopl'
+    servletContainer = 'jetty9'
+}
+
+dependencies {
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.easymock:easymock:3.4'
+
+    providedCompile 'javax.servlet:servlet-api:2.5'
+
+    compile 'org.springframework:spring-core:4.3.7.RELEASE'
+    compile 'org.springframework:spring-beans:4.3.7.RELEASE'
+    compile 'org.springframework:spring-context:4.3.7.RELEASE'
+
+    runtime 'org.hsqldb:hsqldb:2.3.4'
+
+    compile 'org.hibernate:hibernate-core:5.2.9.Final'
+
+    compile 'org.slf4j:slf4j-api:1.7.7'
+    compile 'org.slf4j:slf4j-log4j12:1.7.7'
+}
