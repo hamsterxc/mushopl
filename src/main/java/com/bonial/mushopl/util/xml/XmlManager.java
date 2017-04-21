@@ -1,6 +1,5 @@
 package com.bonial.mushopl.util.xml;
 
-import com.bonial.mushopl.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -63,7 +62,7 @@ public class XmlManager {
     }
 
     private String transform(final String xslFilename, final String xml) throws TransformerException {
-        final Source sourceXsl = new StreamSource(Test.class.getClassLoader().getResourceAsStream(xslFilename));
+        final Source sourceXsl = new StreamSource(getClass().getClassLoader().getResourceAsStream(xslFilename));
         final Transformer transformer = TransformerFactory.newInstance().newTransformer(sourceXsl);
 
         final Source sourceXml = new StreamSource(new StringReader(xml));
